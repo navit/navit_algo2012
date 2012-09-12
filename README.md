@@ -1,4 +1,1 @@
-navit_algo2012
-==============
-
-algo2012
+Hello this is my new Readme file for Algo2012
