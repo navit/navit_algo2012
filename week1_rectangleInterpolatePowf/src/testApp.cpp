@@ -58,10 +58,10 @@ void testApp::update(){
 void testApp::draw(){
     
     myRectangle.draw();
-    ofDrawBitmapString("The Rectangle is moving at 0.003 inch per second",100, 50);
+    ofDrawBitmapString("The Rectangle is moving at _ feet per second",100, 50);
     
     myCirlce.draw();
-    ofDrawBitmapString("The Cirlce is moving at 0.00001 miles per second", 100, 150);
+    ofDrawBitmapString("The Cirlce is moving at _ feet per second", 100, 150);
     
 }
 
