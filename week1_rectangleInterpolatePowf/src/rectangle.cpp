@@ -4,14 +4,14 @@
 
 //------------------------------------------------------------------
 rectangle::rectangle(){
-	shaper = 10;
+	shaper = 5;
 }
 
 //------------------------------------------------------------------
 void rectangle::draw() {
 	ofFill();
 	ofSetRectMode(OF_RECTMODE_CENTER); // center around the position
-    ofSetColor(198,246,55);
+    ofSetColor(200,26,55);
     ofRect(pos.x, pos.y, 50,50);
     
 }

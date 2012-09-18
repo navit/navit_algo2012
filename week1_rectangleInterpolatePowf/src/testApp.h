@@ -21,9 +21,12 @@ class testApp : public ofSimpleApp{
 		void mousePressed(int x, int y, int button);
 		void mouseReleased();
 
-		rectangle myRectangle;
-        circle myCirlce;
-		float pct;
+		rectangle myRectangle;//instance of rectangle
+        circle myCirlce; //instance of circle
+    
+        float circlePct, rectanglePct;//creating two different pct
+    
+
 	
 };
 

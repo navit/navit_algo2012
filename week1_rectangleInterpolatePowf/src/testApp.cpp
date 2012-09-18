@@ -17,35 +17,52 @@ void testApp::setup(){
 	
 	// set the "a" and "b" positions of the rectangle...
 	
-	myRectangle.posa.x = 0;
+	myRectangle.posa.x = 50;
 	myRectangle.posa.y = 50;
 	myRectangle.posb.x = 600;
 	myRectangle.posb.y = 50;
 	myRectangle.interpolateByPct(0);	// start at 0 pct
-	pct = 0;							// a variable we can alter...
+    rectanglePct = 0;							// a variable we can alter...
     
     
-     myCirlce.posa.x = 0;
-	 myCirlce.posa.y = 150;
-	 myCirlce.posb.x = 600;
-	 myCirlce.posb.y = 150;
-	 myCirlce.interpolateByPct(0);	// start at 0 pct
-     pct = 0;
-} 
-
+    myCirlce.posa.x = 50;
+    myCirlce.posa.y = 150;
+    myCirlce.posb.x = 600;
+    myCirlce.posb.y = 150;
+    myCirlce.interpolateByPct(0);	// start at 0 pct
+    circlePct = 0;
+}
 //--------------------------------------------------------------
 void testApp::update(){
+	    
+    
+    //circle speed
+    circlePct += 0.0001f;
 	
-	pct += 0.006f;							// increase by a certain amount
-	if (pct > 1) pct = 0;					// just between 0 and 1 (0% and 100%)
-	myRectangle.interpolateByPct(pct);		// go between pta and ptb
-	 myCirlce.interpolateByPct(pct);
+    if (circlePct > 1) {
+		circlePct = 0;						// just between 0 and 1 (0% and 100%)
+	}
+	myCirlce.interpolateByPct(circlePct);		// go between pta and ptb
+    
+	//rect speed
+    rectanglePct += 0.03f;
+	
+    if (rectanglePct > 1) {
+		rectanglePct = 0;						
+	}
+	myRectangle.interpolateByPct(rectanglePct);
+    
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
+    
     myRectangle.draw();
+    ofDrawBitmapString("The Rectangle is moving at 0.003 inch per second",100, 50);
+    
     myCirlce.draw();
+    ofDrawBitmapString("The Cirlce is moving at 0.00001 miles per second", 100, 150);
+    
 }
 
 //--------------------------------------------------------------
