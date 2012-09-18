@@ -4,17 +4,6 @@
 #include "ofMain.h"
 #include "rectangle.h"
 
-typedef struct {
-    
-	float 	x;
-	float 	y;
-	bool 	bBeingDragged;
-	bool 	bOver;
-	float 	radius;
-	
-}draggableVertex;
-
-
 class testApp : public ofSimpleApp{
 
 	public:
@@ -31,15 +20,9 @@ class testApp : public ofSimpleApp{
 		void mousePressed(int x, int y, int button);
 		void mouseReleased();
 
-		rectangle	vertex; //instances of the class
-       
-		
-		float		pct;
-    
-        int nCurveVertexes;
-        draggableVertex curveVertices[7];
-        
-	
+		rectangle myRectangle;
+        rectangle myNewRectangle;
+		float pct;
 	
 };
 
