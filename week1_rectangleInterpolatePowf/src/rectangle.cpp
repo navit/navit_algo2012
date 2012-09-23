@@ -20,10 +20,14 @@ void rectangle::draw() {
 //------------------------------------------------------------------
 void rectangle::interpolateByPct(float myPct){
 	
-	
+    prevPos = pos;
 	// powf (2, 3) = 8
 	
 	pct = powf(myPct, shaper);
 	pos.x = (1-pct) * posa.x + (pct) * posb.x;
 	pos.y = (1-pct) * posa.y + (pct) * posb.y;
+    
+    ofPoint diff = pos - prevPos;// give me a new point that is created by current pos- prev pos
+    float pixelXframe = diff.length();
+    float pixelsXsec = pixelXframe * ofGetFrameRate();
 }

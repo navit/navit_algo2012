@@ -12,7 +12,8 @@ class rectangle {
 		void draw();
 		void interpolateByPct(float myPct);
 		
-		ofPoint		pos;
+		ofPoint		pos, prevPos;
+    
 		ofPoint		posa;
 		ofPoint		posb;
 		float		pct;	// what pct are we between "a" and "b"
