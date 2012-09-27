@@ -26,11 +26,11 @@ void testApp::draw(){
 	float modulator = ofMap( sin(ofGetElapsedTimef()*10), -1, 1, 0, 1); //mapping -1 & 1 to 0 & 1
 	
     //carriers
-    float ypos= ofMap( cos(ofGetElapsedTimef()*50) * modulator, -1, 1, 5, ofGetHeight()-20);
-	float xpos= ofMap( sin (ofGetElapsedTimef()*50) * modulator, -1, 1, 5, ofGetWidth()-50);
+    float ypos= ofMap( cos(ofGetElapsedTimef()*100) * modulator, -1, 1, 5, ofGetHeight()-20);
+	float xpos= ofMap( sin (ofGetElapsedTimef()*100) * modulator, -1, 1, 5, ofGetWidth()-50);
 	
     ofSetColor(64,255,64);
-	ofCircle(xpos, ypos,4 );
+	ofCircle(xpos, ypos,10);
     
     
     //drawing and storing the points
@@ -41,11 +41,12 @@ void testApp::draw(){
 	if (points.size() > 1000){//how many points to store
 		points.erase(points.begin());
 	}
-    
+    ofSetColor(1,92,101);
     ofBeginShape();
 	for (int i = 0; i < points.size(); i++){
 		ofVertex(points[i].x, points[i].y);
-	}
+//        ofCurve(points[i].x, points[i].y, points[i].x/2, points[i].y/2, points[i].x/5, points[i].y/5, points[i].x/10, points[i].y/10);
+    }
 	ofEndShape();
 	
 	
