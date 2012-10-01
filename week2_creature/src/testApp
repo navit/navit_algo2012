@@ -1,0 +1,119 @@
+#include "testApp.h"
+#include "ofMain.h"
+
+//--------------------------------------------------------------
+void testApp::setup(){
+
+	
+	// macs by default run on non vertical sync, which can make animation very, very fast
+	// this fixes that: 
+	
+	ofSetVerticalSync(true);
+	
+	// set background: 
+	
+	ofEnableAlphaBlending();
+	ofBackground(30,30,30);
+	
+	
+	// set the position of the rectangle:
+    radius = 50;
+    
+    
+    for( int i =0; i<12; i++){
+        myRectangle[i].pos.x = 200;
+        myRectangle[i].pos.y = 200;
+    }
+    
+	//myRectangle[i].pos.x = 100;
+	//myRectangle[i].pos.y = 50;
+	
+}
+
+//--------------------------------------------------------------
+void testApp::update(){
+    
+    for (int i = 0; i < points.size(); i++){
+        points[i].x += ofRandom(-1,1);
+		points[i].y += ofRandom(-1,1);
+	}
+	
+    for( int i =0; i<12; i++){
+        myRectangle[i].pos.x = ofRandom(90);
+        myRectangle[i].pos.y = ofRandom(90);
+    }
+    
+	myRectangle[12].xenoToPoint(mouseX, mouseY);
+    
+    
+    
+}
+
+//--------------------------------------------------------------
+void testApp::draw(){
+    ofNoFill();
+	ofSetColor(255,170,0);
+    
+    ofBeginShape();
+	for (int i = 0; i < points.size(); i++){
+		ofVertex(points[i].x, points[i].y);
+	}
+	ofEndShape();
+    
+    float xorig = mouseX;
+	float yorig = mouseY;
+	float radius = 50;
+	float angle = ofGetElapsedTimef()*5;
+	
+	float x = xorig + radius * cos(angle);
+	float y = yorig + radius * -sin(angle);
+    
+    
+//	
+//	ofSetRectMode(OF_RECTMODE_CENTER);
+//	ofSetColor(255,255,255);
+//	ofCircle(x,y, radius );
+//    
+
+	for( int i =0; i<12; i++){
+        myRectangle[i].draw();
+        
+    }
+    
+    
+	//myRectangle[i].draw();
+}
+
+//--------------------------------------------------------------
+void testApp::keyPressed  (int key){
+}
+
+//--------------------------------------------------------------
+void testApp::keyReleased  (int key){
+}
+
+//--------------------------------------------------------------
+void testApp::mouseMoved(int x, int y ){
+}
+
+//--------------------------------------------------------------
+void testApp::mouseDragged(int x, int y, int button){
+    ofPoint tempPt;
+	tempPt.x = x;
+	tempPt.y = y;
+	points.push_back(tempPt);
+	//printf ("size of vector %i \n", points.size());
+	
+	
+	if (points.size() > 1000){
+		points.erase(points.begin());
+	}
+}
+
+//--------------------------------------------------------------
+void testApp::mousePressed(int x, int y, int button){
+}
+
+//--------------------------------------------------------------
+void testApp::mouseReleased(){
+}
