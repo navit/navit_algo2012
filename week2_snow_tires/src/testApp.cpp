@@ -21,10 +21,10 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
     
-//    radius = radius + 0.1;
-//    SecRadius= SecRadius + 0.2;
-//    ThirdRadius =ThirdRadius + 0.3;
-//
+    radius = radius + 0.1;
+   SecRadius= SecRadius + 0.2;
+    ThirdRadius =ThirdRadius + 0.3;
+
 }
 
 //--------------------------------------------------------------
@@ -108,6 +108,7 @@ void testApp::keyPressed(int key){
         radius=0;
         SecRadius= 0;
         ThirdRadius = 0;
+        FourthRadius =0;
     }
     
 
