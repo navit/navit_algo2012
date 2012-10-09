@@ -17,7 +17,7 @@ class particle
         void update();
         void draw();
 	
-        void bounceOffWalls();
+        //void bounceOffWalls();
         
         ofVec2f pos;
         ofVec2f vel;

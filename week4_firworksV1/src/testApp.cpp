@@ -52,7 +52,10 @@ void testApp::draw(){
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
+void testApp::keyPressed  (int key){
+    if(key=='f' || key=='F'){
+        ofToggleFullscreen();
+    }
 }
 
 //--------------------------------------------------------------
