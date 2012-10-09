@@ -8,7 +8,7 @@ void testApp::setup(){
 	ofSetFrameRate(50);
 	
 	ofBackground(0, 0, 0);
-
+    timer =0;
 	
 	for (int i = 0; i < 100; i++){
 		particle myParticle;
@@ -37,6 +37,18 @@ void testApp::update(){
 		//particles[i].bounceOffWalls();
 		particles[i].update();
 	}
+    
+    if ( timer > 1){ //5 sec
+        ofPoint pos = ofPoint(ofRandom(ofGetWidth()),ofRandom(ofGetHeight()));
+        
+        for (int i = 0; i < particles.size(); i++){
+            particles[i].setInitialCondition(pos.x,pos.y,ofRandom(-10,10), ofRandom(-10,10));
+            particles[i].color.setHue(hue + ofRandom(-10,10));
+        }
+        timer = 0;
+    }
+    
+    timer += 1.0/ofGetFrameRate();// increament by sec.
 
 }
 
@@ -74,11 +86,6 @@ void testApp::mouseDragged(int x, int y, int button){
 void testApp::mousePressed(int x, int y, int button){
     
     hue = (hue + 10)%255;
-    
-	for (int i = 0; i < particles.size(); i++){
-		particles[i].setInitialCondition(mouseX,mouseY,ofRandom(-10,10), ofRandom(-10,10));
-        particles[i].color.setHue(hue + ofRandom(-10,10));
-	}
     
 }
 

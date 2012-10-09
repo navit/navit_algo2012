@@ -25,7 +25,7 @@ class testApp : public ofSimpleApp{
 		// let's make a vector of them
 		vector <particle> particles;
     int hue;
-	
+	float timer;
 	
 };
 
