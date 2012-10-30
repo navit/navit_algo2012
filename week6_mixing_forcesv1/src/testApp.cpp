@@ -17,6 +17,8 @@ void testApp::setup(){
 		myParticle.setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),0,0);
 		particles.push_back(myParticle);
 	}
+		
+	VF.setupField(60,40,ofGetWidth(), ofGetHeight());
 	
 	
 }
@@ -48,14 +50,31 @@ void testApp::update(){
 		particles[i].addDampingForce();
 		particles[i].update();
 	}
+    
+    for (int i = 0; i < particles.size(); i++){
+		particles[i].resetForce();
+		
+		// get the force from the vector field:
+		ofVec2f frc;
+		frc = VF.getForceFromPos(particles[i].pos.x, particles[i].pos.y);
+		particles[i].addForce(frc.x, frc.y);
+		particles[i].addDampingForce();
+		particles[i].update();
+        
+	}
+	
+	VF.fadeField(0.99f);
+
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-	
-	
-	ofSetColor(0xffffff);
-	
+	ofBackground(0, 0, 0);
+	ofEnableAlphaBlending();
+    ofSetColor(30, 56, 90);
+	VF.draw();
+    
+		
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].draw();
 	}
@@ -97,6 +116,14 @@ void testApp::mouseDragged(int x, int y, int button){
 	particle myParticle;
 	myParticle.setInitialCondition(x,y,0,0);
 	particles.push_back(myParticle);
+    
+    float diffx = x - prevMouseX;
+	float diffy = y - prevMouseY;
+	
+	VF.addVectorCircle((float)x, (float)y, diffx*0.3, diffy*0.3, 60, 0.3f);
+    
+    prevMouseX = x;
+	prevMouseY = y;
 }
 
 //--------------------------------------------------------------

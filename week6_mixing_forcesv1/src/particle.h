@@ -42,6 +42,7 @@ class particle
         int lead;
         int size;
         ofFloatColor color;
+        
     
         vector <ofVec2f> trail;
     

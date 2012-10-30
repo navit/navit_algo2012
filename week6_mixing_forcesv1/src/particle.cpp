@@ -316,12 +316,14 @@ void particle::draw(){
     
     
     ofPushMatrix();
+    ofSetColor(color,55);
     ofSetCircleResolution(lead);
 	ofEndShape();
     ofTranslate(ofGetMouseX(),ofGetMouseY());
     ofRotateZ(angle * RAD_TO_DEG);
-    ofEllipse(20,20,20,size);
+    ofEllipse(20,20,50,size);
     ofPopMatrix();
+
 
        
 }

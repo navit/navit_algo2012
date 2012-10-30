@@ -15,9 +15,9 @@ vectorField::vectorField(){
 	
 	
 	
-	/*fieldWidth  = 60;
-     fieldHeight = 40;
-	 */
+//	fieldWidth  = 60;
+//    fieldHeight = 40;
+	 
 }
 
 //------------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void vectorField::draw(){
 	
     for (int i = 0; i < fieldWidth; i++){
         for (int j = 0; j < fieldHeight; j++){
-            
+        
             // pos in array
             int pos = j * fieldWidth + i;
             // pos externally
@@ -81,38 +81,19 @@ void vectorField::draw(){
             float px2 = px + field[pos].x * 5;
             float py2 = py + field[pos].y * 5;
 			
-            
-            //add Gradient Color
-            ofColor c;
-            float angle,dist,hue,sat,bri;
-            //style 1
-            angle = atan2(j-fieldHeight/2,i-fieldWidth/2)+PI;
-            dist = ofDist(i,j,fieldWidth/2,fieldHeight/2);
-            hue = angle/TWO_PI*255;
-            sat = ofMap(dist,0,fieldWidth/4,0,255,true);
-            bri = ofMap(dist,fieldWidth/4,fieldWidth/2,255,150,true);
-            
-            
-            //style 2
-            //            angle = atan2(j-fieldWidth/2,i-fieldHeight/2)+PI;
-            //            c = ofColor::fromHsb(angle/TWO_PI*255,255,255);
-            //push color
-            //            ofSetColor(c,100);
-            
             ofLine(px,py, px2, py2);
-			
-			
-			// draw an baseline to show direction
+            
+            // draw an baseline to show direction
 			// get the line as vector, calculate length, then normalize.
 			// rotate and draw based on length
 			
-			ofVec2f line;
-			line.set(px2-px, py2-py);
-			float length = line.length();
-			line.normalize();
-			line.rotate(90);  // these are angles in degrees
-			ofLine(px - line.x*length*0.2, py - line.y*length*0.2, px + line.x*length*0.2, py + line.y*length*0.2);
-			
+//			ofVec2f line;
+//			line.set(px2-px, py2-py);
+//			float length = line.length();
+//			line.normalize();
+//			line.rotate(180);  // these are angles in degrees
+//			ofLine(px - line.x*length*0.2, py - line.y*length*0.2, px + line.x*length*0.2, py + line.y*length*0.2);
+          
 			
         }
     }
