@@ -83,9 +83,10 @@ void testApp::draw(){
 							"\n(z/x) radius = " + ofToString(radius) + 
 							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
 	
-	ofSetColor(40,40,0);
+	ofSetColor(90,65,255);
+    ofSetLineWidth(1);
 	ofRect(10,10,300,80);
-	ofSetColor(255,255,255);
+	ofSetColor(56,65,255);
 	ofDrawBitmapString(reportString, 30, 30);
 	
 }

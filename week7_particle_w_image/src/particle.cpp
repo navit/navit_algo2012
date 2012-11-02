@@ -204,10 +204,10 @@ void particle::draw(){
     ofSetColor(color,15);
     ofSetLineWidth(2);
     ofNoFill();
-    ofMesh lineMesh;
+    //ofMesh lineMesh;
 	ofBeginShape();
 	for (int i = 0; i < trail.size(); i++){
-        lineMesh.addVertex(trail[i]);
+        //lineMesh.addVertex(trail[i]);
         ofVertex(trail[i].x, trail[i].y);
 	}
 	ofEndShape();
