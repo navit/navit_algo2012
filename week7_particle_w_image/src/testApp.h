@@ -27,9 +27,11 @@ class testApp : public ofSimpleApp{
 		bool	bRepel;
 		float	radius;
 		float	strength;
-	
-		ofImage spot;
-       // ofImage spot1;
+       
+        
+        ofImage spot;
+        //ofImage spot1;
+        ofImage space;
 	
 		 
 	

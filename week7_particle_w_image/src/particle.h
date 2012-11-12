@@ -8,18 +8,19 @@ class particle
     public:
         ofVec2f pos;
         ofVec2f vel;
-        ofVec2f frc;   // frc is also know as acceleration (newton says "f=ma")
-        //ofVec2f currentPos;
-        //ofVec2f prevPos;
+        ofVec2f frc;   
+        ofVec2f currentPos;
+        ofVec2f prevPos;
 
     
-        ofImage * img;
+        ofImage * img; //pointer
+        //ofImage * img1;
     
 	
 	
         particle();
 		virtual ~particle(){};
-
+        //functions
         void resetForce();
 		void addForce(float x, float y);
 		void addRepulsionForce(float x, float y, float radius, float scale);
@@ -35,12 +36,13 @@ class particle
 	
 		void bounceOffWalls();
 	
-	
+        //variables
     
 		float damping;
         ofFloatColor color;
-        //float lead;
-        //float size;
+        float radius;
+        float tail;
+    
     
     
         vector <ofVec2f> trail;

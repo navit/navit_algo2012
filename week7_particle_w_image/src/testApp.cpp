@@ -6,26 +6,25 @@ void testApp::setup(){
 	
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
-	
-	spot.loadImage("HAZE.png");
-    //spot1.loadImage("HAZE1.PNG");
+	space.loadImage("space.jpg");
+	spot.loadImage("moon.png");
+    //spot1.loadImage("HAZE2.PNG");
 	
 	for (int i = 0; i < 200; i++){
 		particle myParticle;
 		myParticle.setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),0,0);
 		myParticle.img = &spot;
-		particles.push_back(myParticle);
-		
+        //myParticle.img1 = &spot1;
+		particles.push_back(myParticle);	
 	}
 
 
 	bRepel		= true;
 	radius		= 40;
 	strength	= 0.05f;
-	
-	
-	ofBackground(0,0,0);
-	
+      	
+
+		
 }
 
 //--------------------------------------------------------------
@@ -66,12 +65,12 @@ void testApp::update(){
 void testApp::draw(){
 	
 	ofEnableAlphaBlending();
-	ofSetColor(0,130,130, 200);
-	
-	ofSetColor(255,255,255,80);
-	
+	//ofSetColor(0,130,130, 200);
+	//ofSetColor(255, 255, 255);
+	//ofSetColor(255,255,255,80);
+    space.draw(0,0, 1500,1000);
+
 	ofSetRectMode(OF_RECTMODE_CENTER);
-	
 	
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].draw();
@@ -80,8 +79,8 @@ void testApp::draw(){
 	ofSetRectMode(OF_RECTMODE_CORNER);
 	//drawing interactions
 	string reportString =	"(space) = reset\n(a/s) strength = " + ofToString(strength) + 
-							"\n(z/x) radius = " + ofToString(radius) + 
-							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
+							"\n(z/x) radius = " + ofToString(radius) +
+							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting" );
 	
 	ofSetColor(90,65,255);
     ofSetLineWidth(1);
@@ -119,6 +118,7 @@ void testApp::keyPressed  (int key){
 		case 'r':
 			bRepel = !bRepel;
 			break;
+    
 	}
 	
     if(key=='f' || key=='F'){
@@ -141,6 +141,7 @@ void testApp::mouseDragged(int x, int y, int button){
 	particles.erase(particles.begin());
 	particle myParticle;
 	myParticle.img = &spot;
+    //myParticle.img1 = &spot1; //pass the reference of the second image
 	myParticle.setInitialCondition(x,y,0,0);
 	particles.push_back(myParticle);
 }

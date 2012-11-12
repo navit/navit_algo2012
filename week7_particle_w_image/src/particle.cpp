@@ -5,7 +5,7 @@
 particle::particle(){
 	setInitialCondition(0,0,0,0);
 	damping = 0.12f;
-    //lead =5;
+    
 }
 
 //------------------------------------------------------------
@@ -168,19 +168,23 @@ void particle::addDampingForce(){
 void particle::setInitialCondition(float px, float py, float vx, float vy){
     pos.set(px,py);
 	vel.set(vx,vy);
-    
-    //drawing variables
+    radius = 3;
+    tail = 6;
+
+    //color variables
     float angle = atan2(pos.y-ofGetHeight()/2,pos.x-ofGetWidth()/2)+PI;
-    float distance = ofDist(pos.x,pos.y,ofGetWidth()/2,ofGetHeight()/2);
-    float sat = ofMap(distance,0,ofGetWidth(),150,200,true);
-    float brightness = ofMap(distance,ofGetWidth(),ofGetWidth(),180,100,true);
-    color = ofColor::fromHsb(sat,brightness,255);
+    float distance = ofDist(pos.x,pos.y,ofGetWidth(),ofGetHeight());
+    float sat = ofMap(distance,0,ofGetWidth(),100,240,true);
+    float brightness = ofMap(distance,ofGetWidth(),ofGetWidth(),180,220,true);
+    float hue = ofMap(distance, 0, 100, 100, 200);
+    color = ofColor::fromHsb(sat,brightness,hue);
 }
 
 //------------------------------------------------------------
 void particle::update(){	
 	vel = vel + frc;
 	pos = pos + vel;
+    radius += 0.1;
     
     if(trail.size()>100);{
         trail.push_back(pos);
@@ -189,10 +193,25 @@ void particle::update(){
 
 //------------------------------------------------------------
 void particle::draw(){
-    //ofCircle(pos.x, pos.y, 3);
-	img->draw(pos.x, pos.y, 150, 150);
+    //img1->draw(pos.x, pos.y, 150, 150);
+    
+    float Nx = pos.x - prevPos.x;
+    float Ny = pos.y - prevPos.y;
+    
+    float angle = atan2(Nx, Ny)+ PI;
+    
+
+    ofPushMatrix();
+    
+    ofTranslate(pos.x,pos.y);
+    ofRotateZ(ofRadToDeg(angle));//transalting from one system to another- from rad to degree
+    img->draw(0, 0, 200, 200);
+    
+    ofPopMatrix();
+	
   
-    ofSetColor(200,200);
+      
+    
 	ofPoint temp;
 	temp.x = pos.x;
 	temp.y = pos.y;
@@ -201,17 +220,15 @@ void particle::draw(){
 		trail.erase(trail.begin());
 	}
     
-    ofSetColor(color,15);
-    ofSetLineWidth(2);
+    ofSetColor(color,80);
+    ofSetLineWidth(1);
     ofNoFill();
-    //ofMesh lineMesh;
-	ofBeginShape();
+    ofBeginShape();
 	for (int i = 0; i < trail.size(); i++){
-        //lineMesh.addVertex(trail[i]);
         ofVertex(trail[i].x, trail[i].y);
+        ofSetCircleResolution(tail);
+        ofCircle(trail[i].x, trail[i].y, radius);
 	}
-	ofEndShape();
-    
 }
 
 
