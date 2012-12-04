@@ -259,6 +259,9 @@ void particle::draw(){
 	trail.push_back(temp);
 	if (trail.size() > 40){
 		trail.erase(trail.begin());
+        ofSetColor(0,104,90);
+        ofSetCircleResolution(3);
+        ofCircle(pos.x, pos.y,8);
 	}
     
 	ofFill();
@@ -267,9 +270,8 @@ void particle::draw(){
     ofSetLineWidth(1);
 	for (int i = 0; i < trail.size(); i++){
         lineMesh.addVertex(trail[i]);
-        ofSetColor(200, 33, 122);
+        ofSetColor(88,167,42);
         ofCircle(trail[i].x, trail[i].y,1);
-        //ofRect(trail[i].x, trail[i].y, 10*sin(pos.x), 10*sin(pos.y));
 	}
     lineMesh.draw();
 	ofEndShape();

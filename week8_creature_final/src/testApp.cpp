@@ -35,7 +35,7 @@ void testApp::setup(){
     float xorig = ofGetMouseX();
 	float yorig = ofGetMouseY();
     
-    angle = ofGetElapsedTimef() *10;
+    angle = ofGetElapsedTimef() *40;
     
     particle * P1 = new particle();
     P1->setInitialCondition(pos.x, pos.y, 0, 0);
@@ -45,7 +45,7 @@ void testApp::setup(){
     P2->setInitialCondition(pos.x, pos.y, 0, 0);
     particles.push_back(P2);
     
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 30; i++){
         particle * firstParticle = new particle();
         float x = pos.x + radius * -cos(angle);
         float y = pos.y + radius * sin(angle);
@@ -56,16 +56,16 @@ void testApp::setup(){
      
 
         
-        for(int i=0; i <10; i++){
-            particle * secParticle = new particle();
-            float x1 = pos.x + radius * -cos(angle);
-            float y1 = pos.y + radius * sin(angle);
-            firstParticle->setInitialCondition(x1,y1,0,0);
-            particles.push_back(secParticle);
-            
-            makeSpring(P2, secParticle);
-
-        }
+//        for(int i=0; i <10; i++){
+//            particle * secParticle = new particle();
+//            float x1 = pos.x + radius * -cos(angle);
+//            float y1 = pos.y + radius * sin(angle);
+//            firstParticle->setInitialCondition(x1,y1,0,0);
+//            particles.push_back(secParticle);
+//            
+//            makeSpring(P2, secParticle);
+//
+//        }
     }
 }
 
@@ -131,7 +131,7 @@ void testApp::draw(){
     for (int i = 0; i < springs.size(); i++){
         float alpha = ofMap(100, 0, 0.1, 0.0, 0.8);
         ofSetColor(88,167,42,alpha);
-		springs[i].draw();
+		//springs[i].draw();
 	}
 }
 //--------------------------------------------------------------
