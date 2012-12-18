@@ -11,6 +11,14 @@ void testApp::setup(){
     //ofBackground(0,0,0);
 	ofSetVerticalSync(true);
 	ofSetFrameRate(20);
+    
+    ofTrueTypeFont::setGlobalDpi(72);
+    
+	Dosis.loadFont("Dosis-Book.otf", 30, true, true);
+    Dosis1.loadFont("Dosis-Book.otf", 20, true, true);
+	Dosis.setLineHeight(18.0f);
+	Dosis.setLetterSpacing(1.037);
+
 	
     
 	bRepel		= true;
@@ -22,7 +30,7 @@ void testApp::setup(){
    
     //starting with just one particle on the screen
     particle *myParticle = new particle();
-    myParticle->setInitialCondition(ofRandom(ofGetWidth()/2-30,ofGetWidth()/2+30),ofRandom(ofGetHeight()/2-40,ofGetHeight()/2+40),0,0);
+    myParticle->setInitialCondition(ofRandom(ofGetWidth()/2-40,ofGetWidth()/2+40),ofRandom(ofGetHeight()/2,ofGetHeight()/2),0,0);
     particles.push_back(myParticle);;
 
     
@@ -51,17 +59,11 @@ void testApp::update(){
 //		particles[i].addRepulsionForce(mouseX, mouseY, 200, 0.02);//the bigger the number the bigger the repulsion.
 		
 		for (int j = 0; j < i; j++){
-			particles[i]->addRepulsionForce(particles[j], 20, 0.4);
-			particles[i]->addAttractionForce(particles[j], 20, 0.05);
+			particles[i]->addRepulsionForce(particles[j], 15, 0.4);
+			particles[i]->addAttractionForce(particles[j], 10, 0.05);
 		}
         
     }
-//		for (int j = 0; j < i; j++){
-//			if (bRepel){
-//				particles[i].addRepulsionForce(particles[j], radius, strength);
-//			} else {
-//				particles[i].addAttractionForce(particles[j], radius, strength);
-//			}		}
      
     for (int i = 0; i < particles.size(); i++){
         particles[i]->addDampingForce();
@@ -87,25 +89,32 @@ void testApp::update(){
 void testApp::draw(){
 
 	ofEnableAlphaBlending();
-    //ofSetColor(255);
+    ofSetColor(255);
     petri.draw(0,0, 1024,836);
+    ofSetColor(0,175,100);
+	Dosis.drawString("Bacteria Samples", 405, 90);
+    Dosis1.drawString("Staphylococcus",448,120);
+    //Dosis1.drawString("Bacillus typhi",448,120);
+    //Dosis1.drawString("Micrococcus",450,120);
+    
     	
-	
+	ofSetColor(255);
 	for (int i = 0; i < particles.size(); i++){
         //if (drawingMode == 0)
-            particles[i]->draw(&bacteria);
-//        else if (drawingMode == 1)
-//            particles[i]->drawOne();
+        //particles[i]->draw(&bacteria);
+        particles[i]->drawOne();
+        //else if (drawingMode == 1)
+           // particles[i]->drawOne();
 	}
-//	
-	string reportString =	"(space) = reset\n(a/s) strength = " + ofToString(strength) + 
-							"\n(z/x) radius = " + ofToString(radius) + 
-							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
 	
-	ofSetColor(40,40,0);
-	ofRect(10,10,300,80);
-	ofSetColor(255,255,255);
-	ofDrawBitmapString(reportString, 30, 30);
+//	string reportString =	"(space) = reset\n(a/s) strength = " + ofToString(strength) + 
+//							"\n(z/x) radius = " + ofToString(radius) + 
+//							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
+//	
+//	ofSetColor(40,40,0);
+//	ofRect(10,10,300,80);
+//	ofSetColor(255,255,255);
+//	ofDrawBitmapString(reportString, 30, 30);
 	
 }
 
@@ -130,9 +139,9 @@ void testApp::keyPressed  (int key){
 		case 'r':
 			bRepel = !bRepel;
 			break;
-//        case ' ':
-//            drawingMode = (drawingMode+1)%3;
-//            break;
+        case ' ':
+            drawingMode = (drawingMode+1)%3;
+            break;
 	}
     
     
@@ -149,19 +158,11 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-//	particles.erase(particles.begin());
-//	particle myParticle;
-//	myParticle.setInitialCondition(x,y,0,0);
-//	particles.push_back(myParticle);
-    
-    
 
- 
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    //particles.clear();
 }
 
 //--------------------------------------------------------------

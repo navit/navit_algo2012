@@ -27,14 +27,17 @@ class testApp : public ofSimpleApp{
 		bool	bRepel;
 		float	radius;
 		float	strength;
-  
-    
+   
         ofImage petri;
     
         //bg image
         ofImage bacteria;
     
         int drawingMode;
+    
+        ofTrueTypeFont	Dosis;
+        ofTrueTypeFont	Dosis1;
+
 };
 
 #endif

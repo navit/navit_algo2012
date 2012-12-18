@@ -8,11 +8,11 @@ particle::particle(){
     
     //the life of one cell
     life = 0;
-    death = ofRandom(70,100);
+    death = ofRandom(65,100);
     
     //when do they reproduce
-    reproAge = ofRandom(50,70);
-    
+    reproAge = ofRandom(50,60);
+
     //how often do thewy reproduce
     reproFactor = ofRandom(5,10);
     
@@ -225,68 +225,74 @@ void particle::draw(ofImage *img){
 //------------------------------------------------------------
 void particle::drawOne(){
 
-if (bAlive){
-    ofPoint temp;
-    temp.x = pos.x;
-    temp.y = pos.y;
-    points.push_back(temp);
-    if (points.size() > 100){
-        points.erase(points.begin());
-    }
+//type1
+//if (bAlive){
+//    ofPoint temp;
+//    temp.x = pos.x;
+//    temp.y = pos.y;
+//    points.push_back(temp);
+//    if (points.size() > 100){
+//        points.erase(points.begin());
+//    }
+//    
+//    ofNoFill();
+//    ofSetColor(255,245,0,80);
+//    ofSetLineWidth(ofRandom(2));
+//    ofBeginShape();
+//    for (int i = 0; i < points.size(); i++){
+//        ofCurveVertex(points[i].x, points[i].y);
+//        //ofCircle(points[i].x, points[i].y, 20);
+//    }
+//    ofEndShape();
+//    ofSetLineWidth(1);
+//    ofDisableSmoothing();
+//    
+//}
     
-    ofNoFill();
-    ofSetColor(255,50);
-    ofSetLineWidth(3);
-    ofBeginShape();
-    for (int i = 0; i < points.size(); i++){
-        ofCurveVertex(points[i].x, points[i].y);
-    }
-    ofEndShape();
-    ofSetLineWidth(1);
-    ofDisableSmoothing();
-    
-}
+//type2
+//if (bAlive){
+//    ofPoint temp;
+//    temp.x = pos.x;
+//    temp.y = pos.y;
+//    points.push_back(temp);
+//    if (points.size() > 100){
+//        points.erase(points.begin());
+//        }
+//    ofNoFill();
+//    ofSetLineWidth(ofRandom(3));
+//    ofSetColor(77,74,73);
+//    ofBeginShape();
+//    for (int i = 0; i < points.size(); i++){
+//            ofVertex(points[i].x, points[i].y);
+//        }
+//    ofEndShape();
+// }
+//    
 
-    //
-    //    //micrococcus
-    //    if (bAlive)
-    //        ofSetColor(166,111,0);
-    //        ofCircle(pos.x,pos.y,3);
-    //
-    //
-    //    if (bAlive){
-    //	ofPoint temp
-    //	temp.x = pos.x;
-    //	temp.y = pos.y;
-    //	points.push_back(temp);
-    //	if (points.size() > 100){
-    //		points.erase(points.begin());
-    //	}
-    //        ofNoFill();
-    //        ofSetLineWidth(ofRandom(3));
-    //        ofSetColor(255,232,0,90);
-    //        ofBeginShape();
-    //        for (int i = 0; i < points.size(); i++){
-    //            ofVertex(points[i].x, points[i].y);
-    //        }
-    //        ofEndShape();
-    //    }
+//type3
+//if (bAlive)
+// ofSetColor(255);
+// p1.set(pos.x,pos.y+10);
+// p2.set(pos.x+10,pos.y);
+// p3.set(pos.x,pos.y-20);
+// p4.set(pos.x-20,pos.y);
+//    
+// ofBeginShape();
+// ofCurveVertex(p1);
+// ofCurveVertex(p2);
+// ofCurveVertex(p3);
+// ofCurveVertex(p4);
+// ofEndShape();
     
-
-    //if (bAlive)
-    //        ofSetColor(255);
-    //        p1.set(pos.x,pos.y+10);
-    //        p2.set(pos.x+10,pos.y);
-    //        p3.set(pos.x,pos.y-20);
-    //        p4.set(pos.x-20,pos.y);
-    //
-    //        ofBeginShape();
-    //        ofCurveVertex(p1);
-    //        ofCurveVertex(p2);
-    //        ofCurveVertex(p3);
-    //        ofCurveVertex(p4);
-    //        ofEndShape();
-    //
+//type4
+//     if (bAlive)
+//            ofSetColor(0);
+//            ofCircle(pos.x,pos.y,2);
+//            ofCircle(pos.x-10,pos.y-10,5);
+//            //ofSetColor(75,75,75);
+//            //ofCircle(pos.x,pos.y,10);
+////
+    
     
 }
 
