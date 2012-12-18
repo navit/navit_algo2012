@@ -5,7 +5,19 @@
 particle::particle(){
 	setInitialCondition(0,0,0,0);
 	damping = 0.12f;
-   
+    
+    //the life of one cell
+    life = 0;
+    death = ofRandom(100,300);
+    
+    //when do they reproduce
+    reproAge = ofRandom(20,50);
+    
+    //how often do thewy reproduce
+    reproFactor = ofRandom(10,20);
+    
+    bRepro = false;
+    bAlive = true;
 }
 
 //------------------------------------------------------------
@@ -171,40 +183,72 @@ void particle::setInitialCondition(float px, float py, float vx, float vy){
 }
 
 //------------------------------------------------------------
-void particle::update(){	
-	vel = vel + frc;
-	pos = pos + vel;
+void particle::update(){
+        //if life is smaller than death than it exists.
+    if (life < death){ 
+        vel = vel + frc;
+        pos = pos + vel;
+        //if life is bigger than the repo age the reproduct
+        if (life > reproAge){
+            
+            if ( life%reproFactor == 0 ){
+                bRepro = true;
+            } else {
+                bRepro = false;
+            }
+            
+        } else {
+            bRepro = false;
+        }
+        
+        life++;
+        
+        //no life
+    } else {
+        frc *= 0;
+        vel *= 0;
+        bRepro = false;
+        bAlive = false;
+    }
+    
+    
 }
 
 //------------------------------------------------------------
 void particle::draw(){
-    //ofCircle(pos.x,pos.y,3);
+    
+    if (bAlive)
+        ofSetColor(255);
+    else
+        ofSetColor(178);
+    
+    ofCircle(pos.x,pos.y,3);
     
   
-    
-	ofPoint temp;
-	temp.x = pos.x;
-	temp.y = pos.y;
-	points.push_back(temp);
-	if (points.size() > 100){
-		points.erase(points.begin());
-	}
-    
-	ofNoFill();
-    ofSetLineWidth(ofRandom(3));
-    ofSetColor(255,232,0,90);
-	ofBeginShape();
-	for (int i = 0; i < points.size(); i++){
-		ofVertex(points[i].x, points[i].y);
-	}
-	ofEndShape();
-    
-    ofFill();
-    ofPushMatrix();
-    ofTranslate(pos.x, pos.y);
-    ofCircle(0, 0, 2);
-    ofPopMatrix();
-    ofSetCircleResolution(60);
+//    
+//	ofPoint temp;
+//	temp.x = pos.x;
+//	temp.y = pos.y;
+//	points.push_back(temp);
+//	if (points.size() > 100){
+//		points.erase(points.begin());
+//	}
+//    
+//	ofNoFill();
+//    ofSetLineWidth(ofRandom(3));
+//    ofSetColor(255,232,0,90);
+//	ofBeginShape();
+//	for (int i = 0; i < points.size(); i++){
+//		ofVertex(points[i].x, points[i].y);
+//	}
+//	ofEndShape();
+//    
+//    ofFill();
+//    ofPushMatrix();
+//    ofTranslate(pos.x, pos.y);
+//    ofCircle(0, 0, 2);
+//    ofPopMatrix();
+//    ofSetCircleResolution(60);
 }
 
 

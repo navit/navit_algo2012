@@ -13,95 +13,82 @@ void testApp::setup(){
 	radius		= 40;
 	strength	= 0.5f;
     
-    life = 1;
-    death = 0;
-    max_bacteria = 100;
-    timer =0;
+    petri.loadImage("petridish.png");
 
+    //starting with just one particle on the screen
+    particle myParticle;
+    myParticle.setInitialCondition(ofRandom(ofGetWidth()/2-40,ofGetWidth()/2+40),ofRandom(ofGetHeight()/2-40,ofGetHeight()/2+40),0,0);
+    particles.push_back(myParticle);
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
     
 
-    if (timer%30==0){
-    
-        {
-                   for (int y = 0; y < life; y++){
-                        particle myParticle;
-                        myParticle.setInitialCondition(ofRandom(ofGetWidth()/2-40,ofGetWidth()/2+40),ofRandom(ofGetHeight()/2-40,ofGetHeight()/2+40),0,0);
-                        particles.push_back(myParticle);
-                    }
-               }
-            
-             }
-
-    
-    
-    
-    //    n++;
-//    
-//    if(n<10)
-//    {
-//        for (int y = 0; y < n; y++){
+//    if (timer%30==0){
+//        for (int y = 0; y < life; y++){
 //            particle myParticle;
 //            myParticle.setInitialCondition(ofRandom(ofGetWidth()/2-40,ofGetWidth()/2+40),ofRandom(ofGetHeight()/2-40,ofGetHeight()/2+40),0,0);
 //            particles.push_back(myParticle);
 //        }
 //    }
-//    else{
-//        n=0;
-//       
-//    }
-//    
-
+	
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].resetForce();
-	}
-	
-	
-	for (int i = 0; i < particles.size(); i++){
-		
-		particles[i].addRepulsionForce(mouseX, mouseY, 200, 0.02);//the bigger the number the bigger the repulsion.
+//		particles[i].addRepulsionForce(mouseX, mouseY, 200, 0.02);//the bigger the number the bigger the repulsion.
 		
 		for (int j = 0; j < i; j++){
-			particles[i].addRepulsionForce(particles[j], 50, 0.4);
-			particles[i].addAttractionForce(particles[j], 500, 0.005);
+			particles[i].addRepulsionForce(particles[j], 20, 0.4);
+			particles[i].addAttractionForce(particles[j], 10, 0.05);
 		}
-		for (int j = 0; j < i; j++){
-			if (bRepel){
-				particles[i].addRepulsionForce(particles[j], radius, strength);
-			} else {
-				particles[i].addAttractionForce(particles[j], radius, strength);
-			}		}
+        
+    }
+//		for (int j = 0; j < i; j++){
+//			if (bRepel){
+//				particles[i].addRepulsionForce(particles[j], radius, strength);
+//			} else {
+//				particles[i].addAttractionForce(particles[j], radius, strength);
+//			}		}
+     
+    for (int i = 0; i < particles.size(); i++){
+        particles[i].addDampingForce();
+		particles[i].update();
+        
+        if (particles[i].bRepro) {
+            particle myParticle;
+            myParticle.setInitialCondition(particles[i].pos.x,particles[i].pos.y,ofRandom(-1,1),ofRandom(-1,1));
+            particles.push_back(myParticle);
+        }
 	}
 	
-	for (int i = 0; i < particles.size(); i++){
-		particles[i].addDampingForce();
-		particles[i].update();
-	}
+    for (int i = particles.size()-1; i > 0 ; i--){
+        if (!particles[i].bAlive){
+            particles.erase(particles.begin()+i);
+        }
+    }
     
-
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
 
 	ofEnableAlphaBlending();
+    
+    //petri.draw(0,0, 1024,836);
     	
 	
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].draw();
 	}
-	
-	string reportString =	"(space) = reset\n(a/s) strength = " + ofToString(strength) + 
-							"\n(z/x) radius = " + ofToString(radius) + 
-							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
-	
-	ofSetColor(40,40,0);
-	ofRect(10,10,300,80);
-	ofSetColor(255,255,255);
-	ofDrawBitmapString(reportString, 30, 30);
+//	
+//	string reportString =	"(space) = reset\n(a/s) strength = " + ofToString(strength) + 
+//							"\n(z/x) radius = " + ofToString(radius) + 
+//							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
+//	
+//	ofSetColor(40,40,0);
+//	ofRect(10,10,300,80);
+//	ofSetColor(255,255,255);
+//	ofDrawBitmapString(reportString, 30, 30);
 	
 }
 
@@ -113,7 +100,7 @@ void testApp::keyPressed  (int key){
 		case ' ':
 			// reposition everything: 
 			for (int i = 0; i < particles.size(); i++){
-				particles[i].setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),0,0);
+				particles[i].setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),ofRandom(-1,1),ofRandom(-1,1));
 			}
 			break;
 		case 'a':
@@ -158,7 +145,7 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    particles.clear();
+    //particles.clear();
 }
 
 //--------------------------------------------------------------

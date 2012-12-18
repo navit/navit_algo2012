@@ -30,10 +30,16 @@ class particle
 	
 	
 		float damping;
-        ofColor particleColor;
+        
+        int life;
+        int death;
+        int reproAge;
+    int reproFactor;
     
         vector <ofPoint> points;
         
+        bool bRepro;
+        bool bAlive;
     
     protected:
     private:

@@ -27,14 +27,9 @@ class testApp : public ofSimpleApp{
 		bool	bRepel;
 		float	radius;
 		float	strength;
+  
     
-    
-        int life;
-        int death;
-        int max_bacteria;
-        int timer;
-    
-        int n;
+        ofImage petri;
     
 		 
         //ofxControlPanel panel;
