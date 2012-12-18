@@ -1,24 +1,35 @@
 #include "testApp.h"
 
+// comparison routine for sort...
+bool comparisonFunction(  particle * a, particle * b ) {
+	return a->pos.x < b->pos.x;
+}
 
 //--------------------------------------------------------------
 void testApp::setup(){
     //ofSetBackgroundAuto(false);
-    ofBackground(0,0,0);
+    //ofBackground(0,0,0);
 	ofSetVerticalSync(true);
 	ofSetFrameRate(20);
-	//n=1;
+	
     
 	bRepel		= true;
 	radius		= 40;
 	strength	= 0.5f;
     
     petri.loadImage("petridish.png");
-
+    bacteria.loadImage("bacteria2.png");
+   
     //starting with just one particle on the screen
-    particle myParticle;
-    myParticle.setInitialCondition(ofRandom(ofGetWidth()/2-40,ofGetWidth()/2+40),ofRandom(ofGetHeight()/2-40,ofGetHeight()/2+40),0,0);
+    particle *myParticle = new particle();
+    myParticle->setInitialCondition(ofRandom(ofGetWidth()/2-30,ofGetWidth()/2+30),ofRandom(ofGetHeight()/2-40,ofGetHeight()/2+40),0,0);
+    particles.push_back(myParticle);;
+
+    
+    //using an image for a particle
     particles.push_back(myParticle);
+	
+    //drawingMode = 0;
 }
 
 //--------------------------------------------------------------
@@ -32,14 +43,16 @@ void testApp::update(){
 //            particles.push_back(myParticle);
 //        }
 //    }
+    
+    sort( particles.begin(), particles.end(), comparisonFunction );
 	
 	for (int i = 0; i < particles.size(); i++){
-		particles[i].resetForce();
+		particles[i]->resetForce();
 //		particles[i].addRepulsionForce(mouseX, mouseY, 200, 0.02);//the bigger the number the bigger the repulsion.
 		
 		for (int j = 0; j < i; j++){
-			particles[i].addRepulsionForce(particles[j], 20, 0.4);
-			particles[i].addAttractionForce(particles[j], 10, 0.05);
+			particles[i]->addRepulsionForce(particles[j], 20, 0.4);
+			particles[i]->addAttractionForce(particles[j], 20, 0.05);
 		}
         
     }
@@ -51,21 +64,22 @@ void testApp::update(){
 //			}		}
      
     for (int i = 0; i < particles.size(); i++){
-        particles[i].addDampingForce();
-		particles[i].update();
+        particles[i]->addDampingForce();
+		particles[i]->update();
         
-        if (particles[i].bRepro) {
-            particle myParticle;
-            myParticle.setInitialCondition(particles[i].pos.x,particles[i].pos.y,ofRandom(-1,1),ofRandom(-1,1));
+        if ( particles[i]->bRepro) {
+            particle *myParticle = new particle();
+            myParticle->setInitialCondition(particles[i]->pos.x,particles[i]->pos.y,ofRandom(-1,1),ofRandom(-1,1));
             particles.push_back(myParticle);
         }
 	}
 	
     for (int i = particles.size()-1; i > 0 ; i--){
-        if (!particles[i].bAlive){
+        if (!particles[i]->bAlive){
             particles.erase(particles.begin()+i);
         }
     }
+    
     
 }
 
@@ -73,22 +87,25 @@ void testApp::update(){
 void testApp::draw(){
 
 	ofEnableAlphaBlending();
-    
-    //petri.draw(0,0, 1024,836);
+    //ofSetColor(255);
+    petri.draw(0,0, 1024,836);
     	
 	
 	for (int i = 0; i < particles.size(); i++){
-		particles[i].draw();
+        //if (drawingMode == 0)
+            particles[i]->draw(&bacteria);
+//        else if (drawingMode == 1)
+//            particles[i]->drawOne();
 	}
 //	
-//	string reportString =	"(space) = reset\n(a/s) strength = " + ofToString(strength) + 
-//							"\n(z/x) radius = " + ofToString(radius) + 
-//							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
-//	
-//	ofSetColor(40,40,0);
-//	ofRect(10,10,300,80);
-//	ofSetColor(255,255,255);
-//	ofDrawBitmapString(reportString, 30, 30);
+	string reportString =	"(space) = reset\n(a/s) strength = " + ofToString(strength) + 
+							"\n(z/x) radius = " + ofToString(radius) + 
+							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
+	
+	ofSetColor(40,40,0);
+	ofRect(10,10,300,80);
+	ofSetColor(255,255,255);
+	ofDrawBitmapString(reportString, 30, 30);
 	
 }
 
@@ -96,13 +113,6 @@ void testApp::draw(){
 void testApp::keyPressed  (int key){ 
 	
 	switch (key){
-			
-		case ' ':
-			// reposition everything: 
-			for (int i = 0; i < particles.size(); i++){
-				particles[i].setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),ofRandom(-1,1),ofRandom(-1,1));
-			}
-			break;
 		case 'a':
 			strength += 0.02f;
 			break;
@@ -120,9 +130,13 @@ void testApp::keyPressed  (int key){
 		case 'r':
 			bRepel = !bRepel;
 			break;
+//        case ' ':
+//            drawingMode = (drawingMode+1)%3;
+//            break;
 	}
-	
-	
+    
+    
+    	
 }
 
 //--------------------------------------------------------------
@@ -140,6 +154,8 @@ void testApp::mouseDragged(int x, int y, int button){
 //	myParticle.setInitialCondition(x,y,0,0);
 //	particles.push_back(myParticle);
     
+    
+
  
 }
 

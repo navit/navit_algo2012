@@ -8,13 +8,13 @@ particle::particle(){
     
     //the life of one cell
     life = 0;
-    death = ofRandom(100,300);
+    death = ofRandom(70,100);
     
     //when do they reproduce
-    reproAge = ofRandom(20,50);
+    reproAge = ofRandom(50,70);
     
     //how often do thewy reproduce
-    reproFactor = ofRandom(10,20);
+    reproFactor = ofRandom(5,10);
     
     bRepro = false;
     bAlive = true;
@@ -97,11 +97,11 @@ void particle::addAttractionForce(float x, float y, float radius, float scale){
 }
 
 //------------------------------------------------------------
-void particle::addRepulsionForce(particle &p, float radius, float scale){
+void particle::addRepulsionForce(particle * p, float radius, float scale){
 	
 	// ----------- (1) make a vector of where this particle p is: 
 	ofVec2f posOfForce;
-	posOfForce.set(p.pos.x,p.pos.y);
+	posOfForce.set(p->pos.x,p->pos.y);
 	
 	// ----------- (2) calculate the difference & length 
 	
@@ -124,17 +124,17 @@ void particle::addRepulsionForce(particle &p, float radius, float scale){
 		diff.normalize();
 					frc.x = frc.x + diff.x * scale * pct;
         frc.y = frc.y + diff.y * scale * pct;
-					p.frc.x = p.frc.x - diff.x * scale * pct;
-        p.frc.y = p.frc.y - diff.y * scale * pct;
+					p->frc.x = p->frc.x - diff.x * scale * pct;
+        p->frc.y = p->frc.y - diff.y * scale * pct;
     }
 }
 
 //------------------------------------------------------------
-void particle::addAttractionForce(particle & p, float radius, float scale){
+void particle::addAttractionForce(particle * p, float radius, float scale){
 	
 	// ----------- (1) make a vector of where this particle p is: 
 	ofVec2f posOfForce;
-	posOfForce.set(p.pos.x,p.pos.y);
+	posOfForce.set(p->pos.x,p->pos.y);
 	
 	// ----------- (2) calculate the difference & length 
 	
@@ -157,8 +157,8 @@ void particle::addAttractionForce(particle & p, float radius, float scale){
 		diff.normalize();
 		frc.x = frc.x - diff.x * scale * pct;
         frc.y = frc.y - diff.y * scale * pct;
-		p.frc.x = p.frc.x + diff.x * scale * pct;
-        p.frc.y = p.frc.y + diff.y * scale * pct;
+		p->frc.x = p->frc.x + diff.x * scale * pct;
+        p->frc.y = p->frc.y + diff.y * scale * pct;
     }
 	
 }
@@ -215,42 +215,80 @@ void particle::update(){
 }
 
 //------------------------------------------------------------
-void particle::draw(){
+void particle::draw(ofImage *img){
     
     if (bAlive)
-        ofSetColor(255);
-    else
-        ofSetColor(178);
+        img->draw(pos.x, pos.y,25,25);
+
     
-    ofCircle(pos.x,pos.y,3);
+}
+//------------------------------------------------------------
+void particle::drawOne(){
+
+if (bAlive){
+    ofPoint temp;
+    temp.x = pos.x;
+    temp.y = pos.y;
+    points.push_back(temp);
+    if (points.size() > 100){
+        points.erase(points.begin());
+    }
     
-  
-//    
-//	ofPoint temp;
-//	temp.x = pos.x;
-//	temp.y = pos.y;
-//	points.push_back(temp);
-//	if (points.size() > 100){
-//		points.erase(points.begin());
-//	}
-//    
-//	ofNoFill();
-//    ofSetLineWidth(ofRandom(3));
-//    ofSetColor(255,232,0,90);
-//	ofBeginShape();
-//	for (int i = 0; i < points.size(); i++){
-//		ofVertex(points[i].x, points[i].y);
-//	}
-//	ofEndShape();
-//    
-//    ofFill();
-//    ofPushMatrix();
-//    ofTranslate(pos.x, pos.y);
-//    ofCircle(0, 0, 2);
-//    ofPopMatrix();
-//    ofSetCircleResolution(60);
+    ofNoFill();
+    ofSetColor(255,50);
+    ofSetLineWidth(3);
+    ofBeginShape();
+    for (int i = 0; i < points.size(); i++){
+        ofCurveVertex(points[i].x, points[i].y);
+    }
+    ofEndShape();
+    ofSetLineWidth(1);
+    ofDisableSmoothing();
+    
 }
 
+    //
+    //    //micrococcus
+    //    if (bAlive)
+    //        ofSetColor(166,111,0);
+    //        ofCircle(pos.x,pos.y,3);
+    //
+    //
+    //    if (bAlive){
+    //	ofPoint temp
+    //	temp.x = pos.x;
+    //	temp.y = pos.y;
+    //	points.push_back(temp);
+    //	if (points.size() > 100){
+    //		points.erase(points.begin());
+    //	}
+    //        ofNoFill();
+    //        ofSetLineWidth(ofRandom(3));
+    //        ofSetColor(255,232,0,90);
+    //        ofBeginShape();
+    //        for (int i = 0; i < points.size(); i++){
+    //            ofVertex(points[i].x, points[i].y);
+    //        }
+    //        ofEndShape();
+    //    }
+    
+
+    //if (bAlive)
+    //        ofSetColor(255);
+    //        p1.set(pos.x,pos.y+10);
+    //        p2.set(pos.x+10,pos.y);
+    //        p3.set(pos.x,pos.y-20);
+    //        p4.set(pos.x-20,pos.y);
+    //
+    //        ofBeginShape();
+    //        ofCurveVertex(p1);
+    //        ofCurveVertex(p2);
+    //        ofCurveVertex(p3);
+    //        ofCurveVertex(p4);
+    //        ofEndShape();
+    //
+    
+}
 
 //------------------------------------------------------------
 void particle::bounceOffWalls(){

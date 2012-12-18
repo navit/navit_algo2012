@@ -22,7 +22,7 @@ class testApp : public ofSimpleApp{
 		void mouseReleased();
 		
 		// let's make a vector of them
-		vector <particle> particles;
+		vector <particle *> particles;
 	
 		bool	bRepel;
 		float	radius;
@@ -31,9 +31,10 @@ class testApp : public ofSimpleApp{
     
         ofImage petri;
     
-		 
-        //ofxControlPanel panel;
-	
+        //bg image
+        ofImage bacteria;
+    
+        int drawingMode;
 };
 
 #endif
